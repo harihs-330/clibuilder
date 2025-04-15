@@ -1,0 +1,8 @@
+list: "ls -la"
+show: "cat main.go"
+goto: "cd /tmp && pwd"
+disk: "df -h"
+ip: "ifconfig | grep 'inet ' | grep -v 127.0.0.1"
+date: "date"
+whoami: "whoami"
+top5: "ps aux | sort -nrk 3,3 | head -n 5"
