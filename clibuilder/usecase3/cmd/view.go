@@ -6,49 +6,46 @@ import (
 	"os"
 
 	"github.com/manifoldco/promptui"
-	"github.com/spf13/cobra"
 )
 
-var viewCmd = &cobra.Command{
-	Use:   "view",
-	Short: "List all installed repositories",
-	Run: func(cmd *cobra.Command, args []string) {
-		repoDir := "./repos"
-		files, err := ioutil.ReadDir(repoDir)
-		if err != nil {
-			if os.IsNotExist(err) {
-				fmt.Println("No repositories found.")
-			} else {
-				fmt.Println("Error reading repo directory:", err)
-			}
-			return
-		}
+func ViewAction() {
 
-		// Prompt user to select a repo from the list of installed repositories
-		repos := []string{}
-		for _, f := range files {
-			if f.IsDir() {
-				repos = append(repos, f.Name())
-			}
+	repoDir := "./repos"
+	files, err := ioutil.ReadDir(repoDir)
+	if err != nil {
+		if os.IsNotExist(err) {
+			fmt.Println("No repositories found.")
+		} else {
+			fmt.Println("Error reading repo directory:", err)
 		}
+		return
+	}
 
-		if len(repos) == 0 {
-			fmt.Println("No repositories available.")
-			return
+	// Prompt user to select a repo from the list of installed repositories
+	repos := []string{}
+	for _, f := range files {
+		if f.IsDir() {
+			repos = append(repos, f.Name())
 		}
+	}
 
-		// Prompt user to select a repository
-		prompt := promptui.Select{
-			Label: "Select a repository to view",
-			Items: repos,
-		}
+	if len(repos) == 0 {
+		fmt.Println("No repositories available.")
+		return
+	}
 
-		_, result, err := prompt.Run()
-		if err != nil {
-			fmt.Println("Failed to select repository:", err)
-			return
-		}
+	// Prompt user to select a repository
+	prompt := promptui.Select{
+		Label: "Select a repository to view",
+		Items: repos,
+	}
 
-		fmt.Println("Selected repository:", result)
-	},
+	_, result, err := prompt.Run()
+	if err != nil {
+		fmt.Println("Failed to select repository:", err)
+		return
+	}
+
+	fmt.Println("Selected repository:", result)
+
 }

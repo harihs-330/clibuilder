@@ -6,59 +6,34 @@ import (
 	"os/exec"
 	"path"
 	"strings"
-
-	"github.com/manifoldco/promptui"
-	"github.com/spf13/cobra"
 )
 
-var installCmd = &cobra.Command{
-	Use:   "install",
-	Short: "Clone a public repository",
-	Run: func(cmd *cobra.Command, args []string) {
-		// Prompt the user for the repository URL
-		repoURL := getRepoURL()
-
-		// Extract the repository name from the URL
-		repoName := getRepoName(repoURL)
-
-		// Check if the repository already exists
-		if _, err := os.Stat("./repos/" + repoName); err == nil {
-			fmt.Println("Repository already installed.")
-			return
-		}
-
-		// Create the repos directory if it doesn't exist
-		err := os.MkdirAll("./repos", 0755)
-		if err != nil {
-			fmt.Println("Error creating repos directory:", err)
-			return
-		}
-
-		// Clone the repository using git
-		cmdGit := exec.Command("git", "clone", repoURL, "./repos/"+repoName)
-		cmdGit.Stdout = os.Stdout
-		cmdGit.Stderr = os.Stderr
-		if err := cmdGit.Run(); err != nil {
-			fmt.Println("Failed to clone repo:", err)
-		} else {
-			fmt.Println("Repository installed:", repoName)
-		}
-	},
-}
-
-// getRepoURL prompts the user to enter the repository URL
-func getRepoURL() string {
-	prompt := promptui.Prompt{
-		Label: "Enter the repository URL",
+func InstallAction() {
+	repoURL := promptRepo("Install")
+	fmt.Printf("Installing repository: %s\n", repoURL)
+	repoName := getRepoName(repoURL)
+	// Check if the repository already exists
+	if _, err := os.Stat("./repos/" + repoName); err == nil {
+		fmt.Println("Repository already installed.")
+		return
 	}
 
-	result, err := prompt.Run()
+	// Create the repos directory if it doesn't exist
+	err := os.MkdirAll("./repos", 0755)
 	if err != nil {
-		fmt.Println("Failed to get input:", err)
-		os.Exit(1)
+		fmt.Println("Error creating repos directory:", err)
+		return
 	}
 
-	return result
+	// Clone the repository using git
+	cmdGit := exec.Command("git", "clone", repoURL, "./repos/"+repoName)
+	cmdGit.Stdout = os.Stdout
+	cmdGit.Stderr = os.Stderr
+	if err := cmdGit.Run(); err != nil {
+		fmt.Println("Failed to clone repo:", err)
+	} else {
+		fmt.Println("Repository installed:", repoName)
+	}
 }
 
 // getRepoName extracts the repository name from the URL

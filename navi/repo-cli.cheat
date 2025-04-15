@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-# cheatpaths: repo-cli
-
-% repo-cli: Run a file command from config-defined yaml file 
-bash -c './repo-cli'
