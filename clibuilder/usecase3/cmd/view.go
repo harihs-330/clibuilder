@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 
+	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
 
@@ -23,11 +24,31 @@ var viewCmd = &cobra.Command{
 			return
 		}
 
-		fmt.Println("Installed repositories:")
+		// Prompt user to select a repo from the list of installed repositories
+		repos := []string{}
 		for _, f := range files {
 			if f.IsDir() {
-				fmt.Println(" -", f.Name())
+				repos = append(repos, f.Name())
 			}
 		}
+
+		if len(repos) == 0 {
+			fmt.Println("No repositories available.")
+			return
+		}
+
+		// Prompt user to select a repository
+		prompt := promptui.Select{
+			Label: "Select a repository to view",
+			Items: repos,
+		}
+
+		_, result, err := prompt.Run()
+		if err != nil {
+			fmt.Println("Failed to select repository:", err)
+			return
+		}
+
+		fmt.Println("Selected repository:", result)
 	},
 }

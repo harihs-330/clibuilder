@@ -12,6 +12,7 @@ import (
 
 	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/go-plugin"
+	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 )
@@ -114,31 +115,55 @@ func executePlugin(client *plugin.Client, args []string) {
 }
 
 func main() {
-	rootCmd := &cobra.Command{
-		Use:   "cli-builder",
-		Short: "CLI builder that dynamically loads plugins",
-	}
-
 	// Load plugins from the plugins directory.
 	plugins, err := loadPlugins("./plugins")
 	if err != nil {
 		log.Fatalf("Error loading plugins: %v", err)
 	}
 
-	// Add each plugin as a subcommand.
-	for name, client := range plugins {
-		pluginClient := client // capture range variable
-		cmd := &cobra.Command{
-			Use:   name,
-			Short: fmt.Sprintf("Run plugin %s", name),
-			Run: func(cmd *cobra.Command, args []string) {
-				executePlugin(pluginClient, args)
-			},
-		}
-		rootCmd.AddCommand(cmd)
+	// Get plugin names for the interactive prompt.
+	var pluginNames []string
+	for name := range plugins {
+		pluginNames = append(pluginNames, name)
 	}
 
-	if err := rootCmd.Execute(); err != nil {
-		log.Fatalf("Error executing CLI: %v", err)
+	// Interactive prompt to select a plugin
+	prompt := promptui.Select{
+		Label: "Select a plugin to run",
+		Items: pluginNames,
 	}
+
+	_, selectedPlugin, err := prompt.Run()
+	if err != nil {
+		log.Fatalf("Error selecting plugin: %v", err)
+	}
+
+	// Run the selected plugin interactively.
+	pluginClient := plugins[selectedPlugin]
+	cmd := &cobra.Command{
+		Use:   selectedPlugin,
+		Short: fmt.Sprintf("Run plugin %s", selectedPlugin),
+		Run: func(cmd *cobra.Command, args []string) {
+			executePlugin(pluginClient, args)
+		},
+	}
+
+	// Optionally, allow user to pass arguments
+	var args []string
+	for {
+		promptArgs := promptui.Prompt{
+			Label: "Enter arguments for the plugin (comma separated), or press Enter to run",
+		}
+		result, err := promptArgs.Run()
+		if err != nil {
+			log.Fatalf("Error reading arguments: %v", err)
+		}
+		if result == "" {
+			break
+		}
+		args = append(args, result)
+	}
+
+	// Execute the plugin
+	cmd.Run(cmd, args)
 }

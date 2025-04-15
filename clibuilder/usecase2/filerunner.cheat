@@ -2,4 +2,4 @@
 # cheatpaths: filerunner
 
 % filerunner: Run a file command from config-defined yaml file 
-bash -c './filerunner interactive'
+bash -c './filerunner'

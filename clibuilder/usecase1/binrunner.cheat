@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 # cheatpaths: binrunner
 
-# binrunner.cheat
-
-# Command to run the binary interactively
-binrunner: Run a binary command from config-defined interactive mode
-
-# Optionally, you can directly run the script using the following:
-# binrunner: bash -c './binrunner interactive'
+% binrunner: Run a binary command from config-defined interactive mode
+bash -c './binrunner interactive'

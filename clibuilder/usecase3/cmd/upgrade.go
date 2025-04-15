@@ -5,15 +5,17 @@ import (
 	"os"
 	"os/exec"
 
+	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
 
 var upgradeCmd = &cobra.Command{
-	Use:   "upgrade [repo_name]",
+	Use:   "upgrade",
 	Short: "Pull latest changes for a repo",
-	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		repoName := args[0]
+		// Interactive prompt for repository name
+		repoName := getRepoNamePrompt()
+
 		repoPath := "./repos/" + repoName
 
 		if _, err := os.Stat(repoPath); os.IsNotExist(err) {
@@ -30,4 +32,19 @@ var upgradeCmd = &cobra.Command{
 			fmt.Println("Repository upgraded:", repoName)
 		}
 	},
+}
+
+func getRepoNamePrompt() string {
+	// Prompt user for repository name
+	prompt := promptui.Prompt{
+		Label: "Enter the repository name to upgrade",
+	}
+
+	result, err := prompt.Run()
+	if err != nil {
+		fmt.Println("Failed to get input:", err)
+		os.Exit(1)
+	}
+
+	return result
 }

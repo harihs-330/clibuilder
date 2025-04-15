@@ -65,3 +65,6 @@ I have created a plugin to check the health of the url
 go run main.go url-health-checker https://www.google.com/
 ✅ https://www.google.com/ is healthy
 
+
+export NAVI_PATH="/Users/hariharasudhan/Documents/clibuilder/mycli/navi"
+
