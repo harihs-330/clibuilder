@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-# cheatpaths: binrunner
-
-bitrunner:
-  - description: Run a binary command from config-defined interactive mode
-    tag: binrunner
-    script: ./binrunner interactive
