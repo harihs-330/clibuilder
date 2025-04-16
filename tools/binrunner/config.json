@@ -1,0 +1,17 @@
+ {
+    "Commands": [
+      "ls",
+      "date",
+      "whoami",
+      "uptime",
+      "pwd",
+      "Custom"
+    ],
+    "Paths": [
+      "/bin",
+      "/usr/bin",
+      "/usr/local/bin",
+      "Custom"
+    ]
+  }
+  

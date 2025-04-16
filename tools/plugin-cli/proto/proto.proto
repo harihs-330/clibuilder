@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package plugin;
+
+option go_package = "clibuilder/usecase4/proto";
+
+// The Plugin service definition.
+service Plugin {
+  // Run method accepts a list of arguments and returns a message.
+  rpc Run(RunRequest) returns (RunResponse);
+}
+
+// The request message containing the arguments.
+message RunRequest {
+  repeated string args = 1;
+}
+
+// The response message containing the output.
+message RunResponse {
+  string message = 1;
+}
