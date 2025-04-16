@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-# cheatpaths: filerunner
-
-% filerunner: Run a file command from config-defined yaml file 
-bash -c './filerunner'

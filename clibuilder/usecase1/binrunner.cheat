@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-# cheatpaths: binrunner
-
-% binrunner: Run a binary command from config-defined interactive or custom mode
-bash -c './binrunner'

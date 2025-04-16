@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-# cheatpaths: cli-plugin
-
-% cli-plugin: Run a file command from config-defined yaml file 
-bash -c './cli-plugin'
