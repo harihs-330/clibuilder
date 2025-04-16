@@ -7,10 +7,8 @@ import (
 )
 
 func UpgradeAction() {
-	repoURL := promptRepo("Install")
-	fmt.Printf("Installing repository: %s\n", repoURL)
+	repoURL := promptRepo("Upgrade")
 	repoName := getRepoName(repoURL)
-
 	repoPath := "./repos/" + repoName
 
 	if _, err := os.Stat(repoPath); os.IsNotExist(err) {
@@ -26,5 +24,4 @@ func UpgradeAction() {
 	} else {
 		fmt.Println("Repository upgraded:", repoName)
 	}
-
 }

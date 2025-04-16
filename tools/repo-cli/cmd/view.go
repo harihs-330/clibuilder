@@ -9,7 +9,6 @@ import (
 )
 
 func ViewAction() {
-
 	repoDir := "./repos"
 	files, err := ioutil.ReadDir(repoDir)
 	if err != nil {
@@ -21,8 +20,7 @@ func ViewAction() {
 		return
 	}
 
-	// Prompt user to select a repo from the list of installed repositories
-	repos := []string{}
+	var repos []string
 	for _, f := range files {
 		if f.IsDir() {
 			repos = append(repos, f.Name())
@@ -34,7 +32,6 @@ func ViewAction() {
 		return
 	}
 
-	// Prompt user to select a repository
 	prompt := promptui.Select{
 		Label: "Select a repository to view",
 		Items: repos,
@@ -47,5 +44,4 @@ func ViewAction() {
 	}
 
 	fmt.Println("Selected repository:", result)
-
 }

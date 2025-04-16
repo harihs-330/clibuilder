@@ -10,7 +10,31 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:   "repo-cli",
-	Short: "CLI tool to manage public repos",
+	Short: "CLI to manage repositories",
+	Run: func(cmd *cobra.Command, args []string) {
+		actions := []string{"install", "upgrade", "view"}
+
+		prompt := promptui.Select{
+			Label: "Select Action",
+			Items: actions,
+		}
+
+		_, action, err := prompt.Run()
+		if err != nil {
+			log.Fatalf("Prompt failed %v\n", err)
+		}
+
+		switch action {
+		case "install":
+			InstallAction()
+		case "upgrade":
+			UpgradeAction()
+		case "view":
+			ViewAction()
+		default:
+			fmt.Println("Unknown action")
+		}
+	},
 }
 
 func Execute() {
@@ -19,10 +43,10 @@ func Execute() {
 
 func promptRepo(action string) string {
 	prompt := promptui.Prompt{
-		Label: fmt.Sprintf("%s Repository Name", action),
+		Label: fmt.Sprintf("%s Repository URL", action),
 		Validate: func(input string) error {
-			if len(input) == 0 {
-				return fmt.Errorf("repository name cannot be empty")
+			if input == "" {
+				return fmt.Errorf("repository URL cannot be empty")
 			}
 			return nil
 		},
