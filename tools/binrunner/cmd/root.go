@@ -1,9 +1,9 @@
 package cmd
 
 import (
+	"clibuilder/utils"
 	"fmt"
 	"os"
-	"strings"
 
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
@@ -50,7 +50,7 @@ Examples:
 			userArgs := []string{}
 			if argString != "" {
 				userArgs = append(userArgs, binaryName)
-				userArgs = append(userArgs, splitArgs(argString)...)
+				userArgs = append(userArgs, utils.SplitArgs(argString)...)
 			} else {
 				userArgs = append(userArgs, binaryName)
 			}
@@ -61,10 +61,6 @@ Examples:
 			_ = cmd.Help()
 		}
 	},
-}
-
-func splitArgs(s string) []string {
-	return strings.Fields(s)
 }
 
 // Execute is called by main.main()

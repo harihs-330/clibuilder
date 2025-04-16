@@ -1,35 +1,22 @@
 package main
 
 import (
+	"clibuilder/tools/filerunner/config"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
 
 	"github.com/manifoldco/promptui"
-	"gopkg.in/yaml.v2"
 )
-
-type Config struct {
-	Help     HelpInfo          `yaml:"help"`
-	Commands map[string]string `yaml:"commands"`
-}
-
-type HelpInfo struct {
-	Description       string            `yaml:"description"`
-	Examples          []string          `yaml:"examples"`
-	Usage             []string          `yaml:"usage"`
-	AvailableCommands map[string]string `yaml:"available_commands"`
-	Flags             []string          `yaml:"flags"`
-}
 
 func main() {
 	// Define flags
-	configFile := "commands.yaml" // Path to YAML config file
+	configFile := "/Users/hariharasudhan/Documents/clibuilder/mycli/tools/filerunner/commands.yaml" // Path to YAML config file
 
 	// Load config
-	config, err := loadConfig(configFile)
+	config, err := config.LoadConfig(configFile)
+	fmt.Println("ďdddd", config)
 	if err != nil {
 		log.Fatalf("❌ Error loading config: %v", err)
 	}
@@ -48,24 +35,8 @@ func main() {
 	ExecuteCommand(key, config.Commands)
 }
 
-// loadConfig reads the YAML config file and returns the parsed Config object
-func loadConfig(path string) (*Config, error) {
-	data, err := ioutil.ReadFile(path)
-	if err != nil {
-		return nil, err
-	}
-
-	var config Config
-	err = yaml.Unmarshal(data, &config)
-	if err != nil {
-		return nil, err
-	}
-
-	return &config, nil
-}
-
 // ShowHelp prints the help message from the loaded config
-func ShowHelp(help HelpInfo) {
+func ShowHelp(help config.HelpInfo) {
 	fmt.Println(help.Description)
 	fmt.Println("\nExamples:")
 	for _, example := range help.Examples {

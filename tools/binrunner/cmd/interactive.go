@@ -15,7 +15,7 @@ var interactiveCmd = &cobra.Command{
 	Use:   "interactive",
 	Short: "Run binrunner in interactive mode using config-defined options",
 	Run: func(cmd *cobra.Command, args []string) {
-		config, err := LoadConfig("../config.json")
+		config, err := LoadConfig("/Users/hariharasudhan/Documents/clibuilder/mycli/tools/binrunner/config.json")
 		if err != nil {
 			log.Fatalf("❌ Failed to load config: %v", err)
 		}
