@@ -1,7 +1,7 @@
 package grpc
 
 import (
-	pb "clibuilder/tools/plugin-cli/proto"
+	pb "clibuilder/tools/plugincli/proto"
 	"context"
 
 	"github.com/hashicorp/go-plugin"

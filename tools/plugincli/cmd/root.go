@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"clibuilder/tools/plugin-cli/grpc"
+	"clibuilder/tools/plugincli/grpc"
 
 	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/go-plugin"

@@ -1,16 +1,16 @@
 To Run the interactive terminal , Please follow below steps
 
-cd cli-interactive
-
 go run main.go
 
-It will list all binaries like 
+It will list all tools like 
 
+👋 Welcome to the CLI Launcher!
+📂 Loading available tools...
 Use the arrow keys to navigate: ↓ ↑ → ← 
-? Select Binary to Execute: 
+? Select a Tool: 
   ▸ binrunner
-    cli-plugin
     filerunner
-    repo-cli
+    plugincli
+    repocli
 
 Then select any binaries and execute it
