@@ -5,23 +5,23 @@ import (
 	"log"
 	"time"
 
-	"github.com/manifoldco/promptui"
-
 	"clibuilder/toolregistry"
+
+	"github.com/manifoldco/promptui"
 )
 
 func main() {
-	fmt.Println("👋 Welcome to the CLI Launcher!")
-	fmt.Println("📂 Loading available tools...")
+	fmt.Println("🤔 Welcome to hmm — your CLI toolbox")
+	fmt.Println("🔍 Scanning for tools...")
 	time.Sleep(1 * time.Second)
 
 	tools := toolregistry.GetTools()
 
 	if len(tools) == 0 {
-		log.Fatal("No tools registered")
+		log.Fatal("⚠️  No tools registered.")
 	}
 
-	toolNames := []string{}
+	var toolNames []string
 	for _, t := range tools {
 		toolNames = append(toolNames, t.Name())
 	}
