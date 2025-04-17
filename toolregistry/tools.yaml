@@ -1,0 +1,10 @@
+binrunner:
+  description: "Run binaries with ease"
+filerunner:
+  description: "Manage files through CLI"
+plugincli:
+  description: "Run and manage plugins"
+repocli:
+  description: "Run and manage git repo commands"
+installer:
+  description: "Install and manage CLI tools"

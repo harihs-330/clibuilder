@@ -11,8 +11,8 @@ import (
 )
 
 func main() {
-	fmt.Println("🤔 Welcome to hmm — your CLI toolbox")
-	fmt.Println("🔍 Scanning for tools...")
+	fmt.Println("🤔 Hmm... what are you trying to do?")
+	fmt.Println("📂 Loading available tools...")
 	time.Sleep(1 * time.Second)
 
 	tools := toolregistry.GetTools()
@@ -21,14 +21,14 @@ func main() {
 		log.Fatal("⚠️  No tools registered.")
 	}
 
-	var toolNames []string
+	var toolOptions []string
 	for _, t := range tools {
-		toolNames = append(toolNames, t.Name())
+		toolOptions = append(toolOptions, fmt.Sprintf("%s - %s", t.Name, t.Description))
 	}
 
 	prompt := promptui.Select{
 		Label: "Select a Tool",
-		Items: toolNames,
+		Items: toolOptions,
 	}
 
 	i, _, err := prompt.Run()
@@ -36,7 +36,7 @@ func main() {
 		log.Fatalf("Prompt failed: %v", err)
 	}
 
-	selectedTool := tools[i]
-	fmt.Printf("🚀 Launching '%s'...\n\n", selectedTool.Name())
-	selectedTool.Run()
+	selected := tools[i]
+	fmt.Printf("🚀 Launching '%s'...\n\n", selected.Name)
+	selected.Run()
 }
