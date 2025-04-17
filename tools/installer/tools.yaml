@@ -1,0 +1,15 @@
+git: brew install git
+node: brew install node
+docker: brew install --cask docker
+go: brew install go
+python: brew install python
+jq: brew install jq
+htop: brew install htop
+wget: brew install wget
+curl: brew install curl
+nmap: brew install nmap
+fzf: brew install fzf
+kubectl: brew install kubectl
+helm: brew install helm
+terraform: brew install terraform
+awscli: brew install awscli
